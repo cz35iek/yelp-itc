@@ -1,6 +1,5 @@
 import React from 'react'
 import './App.css'
-// import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -8,29 +7,15 @@ import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 
-import { SearchPage } from './SearchPage'
+import { SearchPage } from '../Search/SearchPage'
 import { Switch, Route } from 'react-router-dom'
-import { DetailsPage } from './DetailsPage'
-import { Container, BottomNavigation, BottomNavigationAction } from '@material-ui/core'
-import RestoreIcon from '@material-ui/icons/Restore'
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import LocationOnIcon from '@material-ui/icons/LocationOn'
+import { DetailsPage } from '../Details/DetailsPage'
+import { Container, Backdrop, CircularProgress } from '@material-ui/core'
+import { businessStore } from '../../Stores/BusinessStore'
+import { observer } from 'mobx-react-lite'
+import { reviewsStore } from '../../Stores/ReviewsStore'
 
-function App() {
-  // const useStyles = makeStyles(theme => ({
-  //   root: {
-  //     flexGrow: 1,
-  //   },
-  //   menuButton: {
-  //     marginRight: theme.spacing(2),
-  //   },
-  //   title: {
-  //     flexGrow: 1,
-  //   },
-  // }))
-
-  const [value, setValue] = React.useState(0)
-
+export const App = observer(() => {
   return (
     <div className='App'>
       {/* <Header
@@ -69,22 +54,10 @@ function App() {
             <DetailsPage />
           </Route>
         </Switch>
+        <Backdrop open={businessStore.isLoading || reviewsStore.isLoading}>
+          <CircularProgress />
+        </Backdrop>
       </Container>
-      <BottomNavigation
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue)
-        }}
-        showLabels
-        // className={classes.root}
-      >
-        <BottomNavigationAction label='Recents' icon={<RestoreIcon />} />
-        <BottomNavigationAction label='Favorites' icon={<FavoriteIcon />} />
-        <BottomNavigationAction label='Nearby' icon={<LocationOnIcon />} />
-      </BottomNavigation>
-      {/* <Footer>Copyright @{new Date().getFullYear()} by dcode </Footer> */}
     </div>
   )
-}
-
-export default App
+})
