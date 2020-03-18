@@ -42,3 +42,35 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## log
+
+- CRA
+- typescript
+- prettier
+- ant.design
+- darklang proxy
+- search page
+- react-router
+
+## todo
+
+- details page
+  - description
+  - reviews
+- axios
+- error handling (toast)
+- styling (material-ui)
+- tests
+- validation
+- performance optimization
+- publish app on github pages
+- geolocation
+
+## scoring
+
+- Search & Cards - 15 points
+- Reviews - 10 points
+- Http Interaction, Error Handling - 10 points
+- Tests - 10 points
+- Material Design - 5 points
