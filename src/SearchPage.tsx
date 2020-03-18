@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, ChangeEvent } from 'react'
 import { Card, Rate, Spin, Empty } from 'antd'
 import Meta from 'antd/lib/card/Meta'
 import { useHistory, useLocation } from 'react-router-dom'
-import { TextField } from '@material-ui/core'
+import { TextField, InputAdornment } from '@material-ui/core'
+import SearchIcon from '@material-ui/icons/Search'
 
 type Business = {
   id: string
@@ -19,6 +20,7 @@ export const SearchPage = () => {
   const [businesses, setBusinesses] = useState<Business[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const query = useQuery().get('query')
+  const [inputValue, setInputValue] = useState<string>(query!)
   const history = useHistory()
 
   useEffect(() => {
@@ -30,18 +32,29 @@ export const SearchPage = () => {
     })()
   }, [query])
 
-  const onSearch = async (val: string) => {
-    history.push(`/?query=${val}`)
-  }
-
   return (
     <>
       <TextField
         id='standard-basic'
-        label='input search text'
-        onBlur={e => onSearch(e.currentTarget.value)}
+        label='input search query'
+        onBlur={e => history.push(`/?query=${inputValue}`)}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => setInputValue(e.currentTarget.value)}
+        onKeyPress={ev => {
+          if (ev.key === 'Enter') {
+            history.push(`/?query=${inputValue}`)
+          }
+        }}
         defaultValue={query}
-        style={{ marginTop: 20, width: '98vw' }}
+        value={inputValue}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position='end'>
+              <SearchIcon />
+            </InputAdornment>
+          ),
+          fullWidth: true,
+        }}
+        style={{ marginTop: 20 }}
       />
       <Spin spinning={loading}>
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: 10 }}>
