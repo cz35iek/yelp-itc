@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import Search from 'antd/lib/input/Search'
 import { Card, Rate, Spin, Empty } from 'antd'
 import Meta from 'antd/lib/card/Meta'
 import { useHistory, useLocation } from 'react-router-dom'
+import { TextField } from '@material-ui/core'
 
 type Business = {
   id: string
@@ -36,7 +36,13 @@ export const SearchPage = () => {
 
   return (
     <>
-      <Search placeholder='input search text' onSearch={onSearch} defaultValue={query!} style={{ marginTop: 20, width: '98vw' }} />
+      <TextField
+        id='standard-basic'
+        label='input search text'
+        onBlur={e => onSearch(e.currentTarget.value)}
+        defaultValue={query}
+        style={{ marginTop: 20, width: '98vw' }}
+      />
       <Spin spinning={loading}>
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: 10 }}>
           {businesses.map((b: Business) => (
