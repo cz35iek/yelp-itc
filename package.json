@@ -1,4 +1,5 @@
 {
+  "homepage": "https://cz35iek.github.io/yelp-itc",
   "name": "yelp-itc",
   "version": "0.1.0",
   "private": true,
@@ -25,6 +26,8 @@
     "typescript": "^3.7.5"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -46,6 +49,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.1.3"
+    "@types/react-router-dom": "^5.1.3",
+    "gh-pages": "^2.2.0"
   }
 }
