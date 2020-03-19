@@ -8,10 +8,12 @@
 
 - [search page](https://cz35iek.github.io/yelp-itc/#/)
   ![search-page.png](docs/search-page.png)
+- mobile version
   ![search-page-mobile.png](docs/search-page-mobile.png)
 
 - [details page](https://cz35iek.github.io/yelp-itc/#/business/5H9FELa0l_zjRb9lhcvyng) including description + reviews
   ![details-page.png](docs/details-page.png)
+- mobile version  
   ![details-page-mobile.png](docs/details-page-mobile.png)
 
 - react-router
