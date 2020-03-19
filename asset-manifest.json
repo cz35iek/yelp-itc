@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/yelp-itc/static/css/main.552b72a3.chunk.css",
-    "main.js": "/yelp-itc/static/js/main.2577ac1a.chunk.js",
-    "main.js.map": "/yelp-itc/static/js/main.2577ac1a.chunk.js.map",
+    "main.js": "/yelp-itc/static/js/main.e9108afd.chunk.js",
+    "main.js.map": "/yelp-itc/static/js/main.e9108afd.chunk.js.map",
     "runtime-main.js": "/yelp-itc/static/js/runtime-main.a2b349ed.js",
     "runtime-main.js.map": "/yelp-itc/static/js/runtime-main.a2b349ed.js.map",
-    "static/js/2.aa4efc0f.chunk.js": "/yelp-itc/static/js/2.aa4efc0f.chunk.js",
-    "static/js/2.aa4efc0f.chunk.js.map": "/yelp-itc/static/js/2.aa4efc0f.chunk.js.map",
+    "static/js/2.5d68f6d0.chunk.js": "/yelp-itc/static/js/2.5d68f6d0.chunk.js",
+    "static/js/2.5d68f6d0.chunk.js.map": "/yelp-itc/static/js/2.5d68f6d0.chunk.js.map",
     "index.html": "/yelp-itc/index.html",
-    "precache-manifest.0d6e9bb66af934fc3d922fc6de40f024.js": "/yelp-itc/precache-manifest.0d6e9bb66af934fc3d922fc6de40f024.js",
+    "precache-manifest.6869a3f4be9f7945223daea5506dd8ff.js": "/yelp-itc/precache-manifest.6869a3f4be9f7945223daea5506dd8ff.js",
     "service-worker.js": "/yelp-itc/service-worker.js",
     "static/css/main.552b72a3.chunk.css.map": "/yelp-itc/static/css/main.552b72a3.chunk.css.map",
-    "static/js/2.aa4efc0f.chunk.js.LICENSE.txt": "/yelp-itc/static/js/2.aa4efc0f.chunk.js.LICENSE.txt"
+    "static/js/2.5d68f6d0.chunk.js.LICENSE.txt": "/yelp-itc/static/js/2.5d68f6d0.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.a2b349ed.js",
-    "static/js/2.aa4efc0f.chunk.js",
+    "static/js/2.5d68f6d0.chunk.js",
     "static/css/main.552b72a3.chunk.css",
-    "static/js/main.2577ac1a.chunk.js"
+    "static/js/main.e9108afd.chunk.js"
   ]
 }
