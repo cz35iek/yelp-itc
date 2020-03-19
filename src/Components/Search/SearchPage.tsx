@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import { GridItem } from './GridItem'
 const useQuery = () => new URLSearchParams(useLocation().search)
 
-export const StyledGrid = styled(Grid)`
+const StyledGrid = styled(Grid)`
   flex-grow: 1;
   margin-top: 10px;
   justify-content: space-evenly;

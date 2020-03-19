@@ -5,7 +5,12 @@ import { rootStore } from '../../Stores/Stores'
 import { observer } from 'mobx-react-lite'
 import Avatar from '@material-ui/core/Avatar'
 import { Typography, Card, CardHeader, CardContent, Grid } from '@material-ui/core'
-import { StyledGrid } from '../Search/SearchPage'
+import styled from 'styled-components'
+
+const StyledGrid = styled(Grid)`
+  flex-grow: 1;
+  margin-top: 10px;
+`
 export const Reviews = observer(() => {
   const id = useRouteMatch<{ id: string }>('/business/:id')?.params.id!
   const { reviewsStore } = rootStore
