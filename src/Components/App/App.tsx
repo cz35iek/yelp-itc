@@ -42,7 +42,7 @@ export const App = observer(() => {
             <DetailsPage />
           </Route>
         </Switch>
-        <Backdrop open={rootStore.isLoading}>
+        <Backdrop open={rootStore.isLoading} style={{ zIndex: 1 }}>
           <CircularProgress style={{ color: '#d32323' }} />
         </Backdrop>
       </Container>

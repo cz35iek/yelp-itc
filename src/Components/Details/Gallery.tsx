@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 const StyledImage = styled.img`
   max-height: 300px;
-  text-align: 'center';
+  max-width: 90vw;
 `
 
 export const Gallery = (business: BusinessDetails) => (
