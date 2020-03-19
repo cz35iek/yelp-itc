@@ -49,7 +49,7 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 - typescript
 - prettier
 - material-ui (v1 was ant.design)
-- darklang proxy
+- darklang [proxy](proxy-in-dark.png) (https://darklang.com/)
 - search page
 - details page
   - description
@@ -58,13 +58,13 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 - axios
 - mobx
 - error handling (toast)
-- styling
+- styling (added styled components)
 - validation
+- publish app on github pages
 
 ## todo
 
 - tests
-- publish app on github pages
 - theme support
 - performance optimization
 - nth geolocation
