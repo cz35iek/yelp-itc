@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
-import { BusinessDetails } from './DetailsPage'
+import { BusinessDetails } from '../../Stores/BusinessStore'
 
 export const Gallery = (business: BusinessDetails) => (
   <Grid container spacing={2}>

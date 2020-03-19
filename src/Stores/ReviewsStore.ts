@@ -1,4 +1,11 @@
-import { observable, runInAction } from 'mobx'
+import { runInAction } from 'mobx'
+import { Stores } from './Stores'
+
+type GetReviewsResponse = {
+  body: {
+    reviews: Review[]
+  }
+}
 
 export type Review = {
   id: string
@@ -12,20 +19,28 @@ export type Review = {
   }
 }
 
-class ReviewsStore {
-  @observable isLoading: boolean = false
-
+export class ReviewsStore {
+  private stores: Stores
+  public constructor(stores: Stores) {
+    this.stores = stores
+  }
   getReviews = async (id: string) => {
-    runInAction(() => {
-      this.isLoading = true
-    })
-    const reviewsResponse = await (await fetch(`https://cz35iek.builtwithdark.com/api.yelp.com/v3/businesses/${id}/reviews`)).json()
-    runInAction(() => {
-      this.isLoading = false
-    })
-
-    return reviewsResponse.body.reviews as Review[]
+    this.stores.setIsLoading(true)
+    try {
+      const reviewsResponse = await this.stores.api.get<GetReviewsResponse>(
+        `https://cz35iek.builtwithdark.com/api.yelp.com/v3/businesses/${id}/reviews`
+      )
+      return reviewsResponse.data.body.reviews
+    } catch (err) {
+      console.log(err)
+      runInAction(() => {
+        this.stores.setError(err.toString())
+      })
+      throw err
+    } finally {
+      runInAction(() => {
+        this.stores.setIsLoading(false)
+      })
+    }
   }
 }
-
-export const reviewsStore = new ReviewsStore()

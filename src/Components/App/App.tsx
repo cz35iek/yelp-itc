@@ -10,10 +10,10 @@ import MenuIcon from '@material-ui/icons/Menu'
 import { SearchPage } from '../Search/SearchPage'
 import { Switch, Route } from 'react-router-dom'
 import { DetailsPage } from '../Details/DetailsPage'
-import { Container, Backdrop, CircularProgress } from '@material-ui/core'
-import { businessStore } from '../../Stores/BusinessStore'
+import { Container, Backdrop, CircularProgress, Snackbar } from '@material-ui/core'
+import { rootStore } from '../../Stores/Stores'
 import { observer } from 'mobx-react-lite'
-import { reviewsStore } from '../../Stores/ReviewsStore'
+import Alert from '@material-ui/lab/Alert'
 
 export const App = observer(() => {
   return (
@@ -54,10 +54,15 @@ export const App = observer(() => {
             <DetailsPage />
           </Route>
         </Switch>
-        <Backdrop open={businessStore.isLoading || reviewsStore.isLoading}>
+        <Backdrop open={rootStore.isLoading}>
           <CircularProgress />
         </Backdrop>
       </Container>
+      <Snackbar open={rootStore.isError} autoHideDuration={6000} onClose={rootStore.clearError}>
+        <Alert onClose={rootStore.clearError} severity='error'>
+          {rootStore.errorMessage}
+        </Alert>
+      </Snackbar>
     </div>
   )
 })

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useRouteMatch } from 'react-router-dom'
 import { Comment, Avatar } from 'antd'
-import { Review, reviewsStore } from '../../Stores/ReviewsStore'
+import { Review } from '../../Stores/ReviewsStore'
+import { rootStore } from '../../Stores/Stores'
 
 export const Reviews = () => {
   const id = useRouteMatch<{ id: string }>('/business/:id')?.params.id
 
   useEffect(() => {
     ;(async () => {
-      setReviews(await reviewsStore.getReviews(id!))
+      setReviews(await rootStore.reviewsStore.getReviews(id!))
     })()
   }, [id])
 

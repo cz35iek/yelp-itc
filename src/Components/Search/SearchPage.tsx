@@ -4,7 +4,8 @@ import { useHistory, useLocation } from 'react-router-dom'
 import { Card, TextField, InputAdornment, makeStyles, CardActionArea, CardMedia, CardContent, Typography, Grid } from '@material-ui/core'
 import Rating from '@material-ui/lab/Rating'
 import SearchIcon from '@material-ui/icons/Search'
-import { businessStore, Business } from '../../Stores/BusinessStore'
+import { Business } from '../../Stores/BusinessStore'
+import { rootStore } from '../../Stores/Stores'
 import { observer } from 'mobx-react-lite'
 
 const useQuery = () => new URLSearchParams(useLocation().search)
@@ -31,7 +32,7 @@ export const SearchPage = observer(() => {
 
   useEffect(() => {
     ;(async () => {
-      setBusinesses(await businessStore.getBusiness(query!))
+      setBusinesses(await rootStore.businessStore.searchBusinesses(query!))
     })()
   }, [query])
 
@@ -61,7 +62,7 @@ export const SearchPage = observer(() => {
           <Grid item key={b.id}>
             <Card className={classes.card}>
               <CardActionArea onClick={() => history.push(`/business/${b.id}`)}>
-                <CardMedia className={classes.media} image={b.image_url} title={b.name} />
+                <CardMedia className={classes.media} image={b.image_url || '/logo192.png'} title={b.name} />
                 <CardContent>
                   <Typography gutterBottom variant='h5' component='h2'>
                     {b.name}
@@ -81,7 +82,7 @@ export const SearchPage = observer(() => {
             </Card>
           </Grid>
         ))}
-        {businesses.length === 0 && !businessStore.isLoading && <Empty />}
+        {businesses.length === 0 && !rootStore.isLoading && <Empty />}
       </Grid>
     </>
   )

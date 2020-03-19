@@ -1,4 +1,15 @@
-import { observable, runInAction } from 'mobx'
+import { runInAction, action } from 'mobx'
+
+import { Stores } from './Stores'
+
+type BusinessSearchResponse = {
+  body: {
+    businesses: Business[]
+  }
+}
+type BusinessGetResponse = {
+  body: BusinessDetails
+}
 
 export type Business = {
   id: string
@@ -10,20 +21,55 @@ export type Business = {
   review_count: number
 }
 
-class BusinessStore {
-  @observable isLoading: boolean = false
-
-  getBusiness = async (query: string) => {
-    runInAction(() => {
-      this.isLoading = true
-    })
-    const response = await (await fetch(`https://cz35iek.builtwithdark.com/api.yelp.com/v3/businesses/search?term=${query}`)).json()
-    runInAction(() => {
-      this.isLoading = false
-    })
-
-    return response.body.businesses as Business[]
-  }
+export type BusinessDetails = Business & {
+  photos: string[]
+  location: { display_address: string[] }
+  categories: { title: string }[]
 }
 
-export const businessStore = new BusinessStore()
+export class BusinessStore {
+  private stores: Stores
+  public constructor(stores: Stores) {
+    this.stores = stores
+  }
+
+  @action searchBusinesses = async (query: string): Promise<Business[]> => {
+    this.stores.setIsLoading(true)
+    try {
+      const searchResponse = await this.stores.api.get<BusinessSearchResponse>(
+        `https://cz35iek.builtwithdark.com/api.yelp.com/v3/businesses/search?term=${query}`
+      )
+      return searchResponse.data.body.businesses
+    } catch (err) {
+      console.log(err)
+      runInAction(() => {
+        this.stores.setError(err.toString())
+      })
+      throw err
+    } finally {
+      runInAction(() => {
+        this.stores.setIsLoading(false)
+      })
+    }
+  }
+
+  @action getBusinessDetails = async (id: string): Promise<BusinessDetails> => {
+    this.stores.setIsLoading(true)
+    try {
+      const businessResponse = await this.stores.api.get<BusinessGetResponse>(
+        `https://cz35iek.builtwithdark.com/api.yelp.com/v3/businesses/${id}`
+      )
+      return businessResponse.data.body
+    } catch (err) {
+      console.log(err)
+      runInAction(() => {
+        this.stores.setError(err.toString())
+      })
+      throw err
+    } finally {
+      runInAction(() => {
+        this.stores.setIsLoading(false)
+      })
+    }
+  }
+}

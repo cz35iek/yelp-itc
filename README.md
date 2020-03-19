@@ -52,20 +52,21 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 - darklang proxy
 - search page
 - react-router
+- axios
+- mobx
+- error handling (toast)
+- details page
+  - description
 
 ## todo
 
-- details page
-  - description
-  - reviews
-- axios
-- error handling (toast)
+- reviews
 - styling (material-ui)
 - tests
 - validation
 - performance optimization
 - publish app on github pages
-- geolocation
+- nth geolocation
 
 ## scoring
 
