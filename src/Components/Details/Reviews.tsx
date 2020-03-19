@@ -1,33 +1,39 @@
 import React, { useEffect, useState } from 'react'
 import { useRouteMatch } from 'react-router-dom'
-import { Comment, Avatar } from 'antd'
 import { Review } from '../../Stores/ReviewsStore'
 import { rootStore } from '../../Stores/Stores'
-
-export const Reviews = () => {
-  const id = useRouteMatch<{ id: string }>('/business/:id')?.params.id
+import { observer } from 'mobx-react-lite'
+import Avatar from '@material-ui/core/Avatar'
+import { Typography, Card, CardHeader, CardContent, Grid } from '@material-ui/core'
+import { StyledGrid } from '../Search/SearchPage'
+export const Reviews = observer(() => {
+  const id = useRouteMatch<{ id: string }>('/business/:id')?.params.id!
+  const { reviewsStore } = rootStore
 
   useEffect(() => {
     ;(async () => {
-      setReviews(await rootStore.reviewsStore.getReviews(id!))
+      setReviews(await reviewsStore.getReviews(id))
     })()
-  }, [id])
+  }, [id, reviewsStore])
 
   const [reviews, setReviews] = useState<Review[]>([])
 
   return (
-    <>
-      {reviews?.map(r => {
+    <StyledGrid container spacing={2}>
+      {reviews.map(r => {
         return (
-          <Comment
-            author={r.user.name}
-            avatar={<Avatar src={r.user.image_url} alt={r.user.name} />}
-            content={r.text}
-            datetime={r.time_created}
-            key={r.id}
-          />
+          <Grid item key={r.id}>
+            <Card style={{ maxWidth: 345 }}>
+              <CardHeader avatar={<Avatar src={r.user.image_url} alt={r.user.name} />} title={r.user.name} subheader={r.time_created} />
+              <CardContent>
+                <Typography variant='body2' color='textSecondary' component='p'>
+                  {r.text}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
         )
       })}
-    </>
+    </StyledGrid>
   )
-}
+})

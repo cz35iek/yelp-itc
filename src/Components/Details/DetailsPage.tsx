@@ -18,14 +18,20 @@ export const DetailsPage = () => {
     })()
   }, [businessStore, id])
 
-  return (
+  return business ? (
     <>
       <Typography variant='h4' style={{ marginTop: 10 }} align='left' gutterBottom>
-        {business?.name}
+        {business.name}
       </Typography>
-      <Gallery {...business!} />
-      {!rootStore.isLoading && business && <Details {...business} />}
+      <Gallery {...business} />
+      <Details {...business} />
       <Reviews />
     </>
+  ) : rootStore.isLoading ? (
+    <></>
+  ) : (
+    <Typography variant='h4' style={{ marginTop: 10 }}>
+      Not found
+    </Typography>
   )
 }

@@ -1,10 +1,10 @@
-import { List, ListItem, ListItemText, Typography } from '@material-ui/core'
+import { List, ListItem, ListItemText } from '@material-ui/core'
 import Rating from '@material-ui/lab/Rating'
 import React from 'react'
 import { BusinessDetails } from '../../Stores/BusinessStore'
 
 export const Details = (business: BusinessDetails) => (
-  <List dense disablePadding subheader={<Typography align='left'>Description</Typography>}>
+  <List dense disablePadding>
     <ListItem>
       <ListItemText primary='rating' secondary={<Rating defaultValue={business?.rating} readOnly precision={0.5} size='medium'></Rating>} />
     </ListItem>

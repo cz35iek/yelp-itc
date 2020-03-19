@@ -1,34 +1,30 @@
 import React, { useState, useEffect, ChangeEvent } from 'react'
-import { Empty } from 'antd'
 import { useHistory, useLocation } from 'react-router-dom'
-import { Card, TextField, InputAdornment, makeStyles, CardActionArea, CardMedia, CardContent, Typography, Grid } from '@material-ui/core'
+import { Card, TextField, InputAdornment, CardActionArea, CardMedia, CardContent, Typography, Grid } from '@material-ui/core'
 import Rating from '@material-ui/lab/Rating'
 import SearchIcon from '@material-ui/icons/Search'
 import { Business } from '../../Stores/BusinessStore'
 import { rootStore } from '../../Stores/Stores'
 import { observer } from 'mobx-react-lite'
+import styled from 'styled-components'
 
 const useQuery = () => new URLSearchParams(useLocation().search)
 
-const useStyles = makeStyles({
-  root: {
-    flexGrow: 1,
-    marginTop: 10,
-  },
-  card: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 140,
-  },
-})
+export const StyledGrid = styled(Grid)`
+  flex-grow: 1;
+  margin-top: 10px;
+`
 
+export const StyledCard = styled(Card)`
+  min-height: 282px;
+  margin: 0 10px 10px 0;
+`
 export const SearchPage = observer(() => {
   const [businesses, setBusinesses] = useState<Business[]>([])
   const query = useQuery().get('query')
   const [inputValue, setInputValue] = useState<string>(query!)
+  const [error, setError] = useState<boolean>(false)
   const history = useHistory()
-  const classes = useStyles()
 
   useEffect(() => {
     ;(async () => {
@@ -36,16 +32,29 @@ export const SearchPage = observer(() => {
     })()
   }, [query])
 
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setError(!isInputValid(e.currentTarget.value))
+    setInputValue(e.currentTarget.value)
+  }
+
+  const isInputValid = (val: string) => {
+    return /^[a-z0-9\s]+$/i.test(val)
+  }
+
+  const search = () => {
+    if (!error) history.push(`/?query=${inputValue}`)
+  }
+
   return (
     <>
       <TextField
-        id='standard-basic'
-        label='input search query'
-        onBlur={e => history.push(`/?query=${inputValue}`)}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setInputValue(e.currentTarget.value)}
-        onKeyPress={ev => {
-          if (ev.key === 'Enter') {
-            history.push(`/?query=${inputValue}`)
+        style={{ width: '100%', marginTop: 10 }}
+        label='search for services'
+        onBlur={search}
+        onChange={onChange}
+        onKeyPress={e => {
+          if (e.key === 'Enter') {
+            search()
           }
         }}
         value={inputValue}
@@ -56,13 +65,15 @@ export const SearchPage = observer(() => {
             </InputAdornment>
           ),
         }}
+        error={error}
+        helperText={error ? 'Incorrect entry.' : ''}
       />
-      <Grid container className={classes.root} spacing={2}>
+      <StyledGrid container>
         {businesses.map((b: Business) => (
           <Grid item key={b.id}>
-            <Card className={classes.card}>
+            <StyledCard>
               <CardActionArea onClick={() => history.push(`/business/${b.id}`)}>
-                <CardMedia className={classes.media} image={b.image_url || '/logo192.png'} title={b.name} />
+                <CardMedia image={b.image_url || '/logo192.png'} title={b.name} style={{ height: 140 }} />
                 <CardContent>
                   <Typography gutterBottom variant='h5' component='h2'>
                     {b.name}
@@ -79,11 +90,11 @@ export const SearchPage = observer(() => {
                   )}
                 </CardContent>
               </CardActionArea>
-            </Card>
+            </StyledCard>
           </Grid>
         ))}
-        {businesses.length === 0 && !rootStore.isLoading && <Empty />}
-      </Grid>
+        {businesses.length === 0 && !rootStore.isLoading && <Typography variant='h5'>No results</Typography>}
+      </StyledGrid>
     </>
   )
 })
