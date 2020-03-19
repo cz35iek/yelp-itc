@@ -7,7 +7,7 @@ import { Business } from '../../Stores/BusinessStore'
 import { rootStore } from '../../Stores/Stores'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
-
+import PhotoIcon from '@material-ui/icons/Photo'
 const useQuery = () => new URLSearchParams(useLocation().search)
 
 export const StyledGrid = styled(Grid)`
@@ -18,11 +18,12 @@ export const StyledGrid = styled(Grid)`
 export const StyledCard = styled(Card)`
   min-height: 282px;
   margin: 0 10px 10px 0;
+  text-align: center;
 `
 export const SearchPage = observer(() => {
   const [businesses, setBusinesses] = useState<Business[]>([])
   const query = useQuery().get('query')
-  const [inputValue, setInputValue] = useState<string>(query!)
+  const [inputValue, setInputValue] = useState<string>(query || '')
   const [error, setError] = useState<boolean>(false)
   const history = useHistory()
 
@@ -42,14 +43,14 @@ export const SearchPage = observer(() => {
   }
 
   const search = () => {
-    if (!error) history.push(`/?query=${inputValue}`)
+    if (inputValue && !error) history.push(`/?query=${inputValue}`)
   }
 
   return (
     <>
       <TextField
-        style={{ width: '100%', marginTop: 10 }}
-        label='search for services'
+        style={{ width: '100%', marginTop: 10, color: 'red' }}
+        label='search'
         onBlur={search}
         onChange={onChange}
         onKeyPress={e => {
@@ -73,7 +74,11 @@ export const SearchPage = observer(() => {
           <Grid item key={b.id}>
             <StyledCard>
               <CardActionArea onClick={() => history.push(`/business/${b.id}`)}>
-                <CardMedia image={b.image_url || '/logo192.png'} title={b.name} style={{ height: 140 }} />
+                {b.image_url ? (
+                  <CardMedia image={b.image_url} title={b.name} style={{ height: 140 }} />
+                ) : (
+                  <PhotoIcon style={{ width: '140px', height: '100%' }} />
+                )}
                 <CardContent>
                   <Typography gutterBottom variant='h5' component='h2'>
                     {b.name}
@@ -93,7 +98,9 @@ export const SearchPage = observer(() => {
             </StyledCard>
           </Grid>
         ))}
-        {businesses.length === 0 && !rootStore.isLoading && <Typography variant='h5'>No results</Typography>}
+        {businesses.length === 0 && !rootStore.isLoading && (
+          <Typography variant='h5'>{!query ? 'Type to search for business' : 'No results found'}</Typography>
+        )}
       </StyledGrid>
     </>
   )

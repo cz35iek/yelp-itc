@@ -48,24 +48,25 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 - CRA
 - typescript
 - prettier
-- ant.design
+- material-ui (v1 was ant.design)
 - darklang proxy
 - search page
+- details page
+  - description
+  - reviews
 - react-router
 - axios
 - mobx
 - error handling (toast)
-- details page
-  - description
+- styling
+- validation
 
 ## todo
 
-- reviews
-- styling (material-ui)
 - tests
-- validation
-- performance optimization
 - publish app on github pages
+- theme support
+- performance optimization
 - nth geolocation
 
 ## scoring
